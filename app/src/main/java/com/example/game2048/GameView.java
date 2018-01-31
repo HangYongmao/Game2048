@@ -19,20 +19,28 @@ public class GameView extends GridLayout {
 
     private Card[][] cardsMap = new Card[4][4];
     private List<Point> emptyPoints = new ArrayList<>();
+    private static GameView gameView = null;
 
     public GameView(Context context, AttributeSet attr, int defStyle) {
         super(context, attr, defStyle);
+        gameView = this;
         initGameView();
     }
 
     public GameView(Context context, AttributeSet attr) {
         super(context, attr);
+        gameView = this;
         initGameView();
     }
 
     public GameView(Context context) {
         super(context);
+        gameView = this;
         initGameView();
+    }
+
+    public static GameView getGameView() {
+        return gameView;
     }
 
     private void initGameView() {
@@ -105,7 +113,7 @@ public class GameView extends GridLayout {
         }
     }
 
-    private void startGame() {
+    public void startGame() {
 
         MainActivity.getMainActivity().clearScore();
 
@@ -272,8 +280,8 @@ public class GameView extends GridLayout {
                 if ((cardsMap[x][y].getNum() == 0) ||
                         (x > 0 && cardsMap[x][y].equals(cardsMap[x - 1][y])) ||
                         (x < 3 && cardsMap[x][y].equals(cardsMap[x + 1][y])) ||
-                        (y > 0 && cardsMap[x][y].equals(cardsMap[x][y-1])) ||
-                        (y < 3 && cardsMap[x][y].equals(cardsMap[x][y+1]))) {
+                        (y > 0 && cardsMap[x][y].equals(cardsMap[x][y - 1])) ||
+                        (y < 3 && cardsMap[x][y].equals(cardsMap[x][y + 1]))) {
                     complete = false;
                     break ALL;
                 }
