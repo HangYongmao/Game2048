@@ -19,7 +19,7 @@ public class Card extends FrameLayout {
         label.setGravity(Gravity.CENTER);
 
         LayoutParams lp = new LayoutParams(-1, -1);
-        lp.setMargins(10, 10, 10, 10);
+        lp.setMargins(10, 10, 0, 0);
         addView(label, lp);
 
         setNum(0);
@@ -32,7 +32,11 @@ public class Card extends FrameLayout {
 
     public void setNum(int num) {
         this.num = num;
-        label.setText(num+"");
+        if (num <= 0) {
+            label.setText("");
+        } else {
+            label.setText(num + "");
+        }
     }
 
     public boolean equals(Card o) {

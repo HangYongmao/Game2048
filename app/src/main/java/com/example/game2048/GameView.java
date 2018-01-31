@@ -1,16 +1,21 @@
 package com.example.game2048;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class GameView extends GridLayout {
 
     private Card[][] cardsMap = new Card[4][4];
+    private List<Point> emptyPoints = new ArrayList<>();
 
     public GameView(Context context, AttributeSet attr, int defStyle) {
         super(context, attr, defStyle);
@@ -80,20 +85,48 @@ public class GameView extends GridLayout {
 
         int cardWidth = (Math.min(w, h) - 10) / 4;
         addCards(cardWidth, cardWidth);
+        startGame();
     }
 
     private void addCards(int cardWidth, int CardHeight) {
 
         Card card;
 
-        for (int y=0; y<4; y++) {
-            for (int x=0; x<4; x++) {
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
                 card = new Card(getContext());
-                card.setNum(2);
+                card.setNum(0);
                 addView(card, cardWidth, CardHeight);
                 cardsMap[x][y] = card;
             }
         }
+    }
+
+    private void startGame() {
+
+        for (int y=0; y<4; y++) {
+            for (int x=0; x<4; x++) {
+                cardsMap[x][y].setNum(0);
+            }
+        }
+
+        addRandom();
+        addRandom();
+    }
+
+    private void addRandom() {
+
+        emptyPoints.clear();
+
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                if (cardsMap[x][y].getNum() <= 0) {
+                    emptyPoints.add(new Point(x, y));
+                }
+            }
+        }
+        Point p = emptyPoints.remove((int)(Math.random()*emptyPoints.size()));
+        cardsMap[p.x][p.y].setNum(Math.random()>0.1?2:4);
     }
 
     private void swipeLeft() {
