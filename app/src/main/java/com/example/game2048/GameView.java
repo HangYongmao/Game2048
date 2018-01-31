@@ -1,6 +1,8 @@
 package com.example.game2048;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -160,7 +162,7 @@ public class GameView extends GridLayout {
         }
         if (marge) {
             addRandom();
-            marge = false;
+            checkComplete();
         }
     }
 
@@ -192,7 +194,7 @@ public class GameView extends GridLayout {
         }
         if (marge) {
             addRandom();
-            marge = false;
+            checkComplete();
         }
     }
 
@@ -224,7 +226,7 @@ public class GameView extends GridLayout {
         }
         if (marge) {
             addRandom();
-            marge = false;
+            checkComplete();
         }
     }
 
@@ -256,7 +258,34 @@ public class GameView extends GridLayout {
         }
         if (marge) {
             addRandom();
-            marge = false;
+            checkComplete();
+        }
+    }
+
+    private void checkComplete() {
+
+        boolean complete = true;
+
+        ALL:
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                if ((cardsMap[x][y].getNum() == 0) ||
+                        (x > 0 && cardsMap[x][y].equals(cardsMap[x - 1][y])) ||
+                        (x < 3 && cardsMap[x][y].equals(cardsMap[x + 1][y])) ||
+                        (y > 0 && cardsMap[x][y].equals(cardsMap[x][y-1])) ||
+                        (y < 3 && cardsMap[x][y].equals(cardsMap[x][y+1]))) {
+                    complete = false;
+                    break ALL;
+                }
+            }
+        }
+        if (complete) {
+            new AlertDialog.Builder(getContext()).setTitle("提示").setMessage("游戏结束").setPositiveButton("重来", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    startGame();
+                }
+            }).setCancelable(false).show();
         }
     }
 }
