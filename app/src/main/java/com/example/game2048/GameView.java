@@ -49,25 +49,42 @@ public class GameView extends GridLayout {
                         if (Math.abs(offsetX) > Math.abs(offsetY)) {
                             if (offsetX < -5) {
                                 Log.d("GameView", "left");
+                                swipeLeft();
                             } else if (offsetX > 5) {
                                 Log.d("GameView", "right");
+                                swipeRight();
                             }
                         } else {
                             if (offsetY < -5) {
                                 Log.d("GameView", "up");
+                                swipeUp();
                             } else if (offsetY > 5) {
                                 Log.d("GameView", "down");
+                                swipeDown();
                             }
                         }
                         break;
-
                     default:
                         break;
                 }
-
                 return true;
             }
         });
     }
 
+    private void swipeLeft() {
+
+    }
+
+    private void swipeRight() {
+
+    }
+
+    private void swipeUp() {
+
+    }
+
+    private void swipeDown() {
+
+    }
 }
