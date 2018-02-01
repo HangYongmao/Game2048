@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
@@ -94,7 +95,7 @@ public class GameView extends GridLayout {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        int cardWidth = (Math.min(w, h) - 10) / 4;
+        int cardWidth = (Math.min(w, h)) / 4;
         addCards(cardWidth, cardWidth);
         startGame();
     }
@@ -107,7 +108,9 @@ public class GameView extends GridLayout {
             for (int x = 0; x < 4; x++) {
                 card = new Card(getContext());
                 card.setNum(0);
-                addView(card, cardWidth, CardHeight);
+                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(cardWidth, CardHeight);
+                lp.setMargins(10, 10, 10, 10);
+                addView(card, lp);
                 cardsMap[x][y] = card;
             }
         }
